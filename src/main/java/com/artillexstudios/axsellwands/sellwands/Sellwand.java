@@ -7,7 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Sellwand {
     private final String id;
@@ -19,7 +21,8 @@ public class Sellwand {
     private final Section itemSection;
     private final HashSet<Material> disallowed = new HashSet<>();
     private final HashSet<Material> allowed = new HashSet<>();
-
+    private List<String> blocklist_gamemode = new ArrayList<>();
+    private List<String> blocklist_world = new ArrayList<>();
     public Sellwand(String id, @NotNull Config file) {
         this.id = id;
         this.file = file;
@@ -36,6 +39,14 @@ public class Sellwand {
         this.uses = file.getInt("uses", -1);
         this.cooldown = file.getLong("cooldown-milliseconds", 0);
         this.itemSection = file.getSection("item");
+        /* handle Blocklist */
+        List<String> Empty = new ArrayList<>();
+        for (String world_name : file.getStringList("blocklist.world",Empty)) {
+            if(!world_name.isEmpty()) blocklist_world.add(world_name.toUpperCase());
+        }
+        for (String gamemode : file.getStringList("blocklist.gamemode",Empty)) {
+            if(!gamemode.isEmpty()) blocklist_gamemode.add(gamemode.toUpperCase());
+        }
 
         for (String str : file.getStringList("disallowed-containers")) {
             final Material material = Material.getMaterial(str);

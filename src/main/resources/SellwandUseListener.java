@@ -43,19 +43,13 @@ public class SellwandUseListener implements Listener {
         if (event.getItem() == null) return;
         Block block = event.getClickedBlock();
         if (block == null) return;
-
-        Player player = event.getPlayer();
         NBTWrapper wrapper = new NBTWrapper(event.getItem());
-        // Fix Open Copper Chest
-        if( block.getType().name().endsWith("CHEST") && !HookManager.canBuildAt(player, block.getLocation() ) ){
-            event.setCancelled(true);
-            return;
-        }
         String type = wrapper.getString("axsellwands-type");
         if (type == null) return;
         Sellwand sellwand = Sellwands.getSellwands().get(type);
         event.setCancelled(true);
         if (sellwand == null) return;
+        Player player = event.getPlayer();
 
         ItemStack[] contents;
         ContainerHook containerHook = HookManager.getContainerAt(player, block);

@@ -13,7 +13,7 @@ public class FabledSkyBlockHook implements ProtectionHook  {
     public boolean canPlayerBuildAt(@NotNull Player player, @NotNull Location location) {
         Island IS = SkyBlockAPI.getIslandManager().getIslandAtLocation(location);
         if (IS == null) return true;
-        BasicPermission destroyPermission = SkyBlockAPI.getImplementation().getPermissionManager().getPermission("Destroy");
+        BasicPermission destroyPermission = SkyBlockAPI.getImplementation().getPermissionManager().getPermission("Storage");
         return SkyBlockAPI.getImplementation().getPermissionManager().hasPermission(player,IS.getIsland(),destroyPermission);
     }
 
